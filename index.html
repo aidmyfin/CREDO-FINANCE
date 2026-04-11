@@ -2180,31 +2180,194 @@
   <!-- ============================================
        STICKY HEADER WITH NAVIGATION
   ============================================ -->
-  <header class="header" id="header">
-    <div class="header-inner">
-      <a href="#" class="logo">
-        <!-- LOGO IMAGE - REPLACE THIS URL WITH YOUR LOGO -->
-        <img src="https://img.icons8.com/fluency/96/000000/money-bag.png" alt="Credo Finance Logo" class="logo-img">
-        <span class="logo-text">Credo <span>Finance</span></span>
-      </a>
-      <nav class="nav-links">
-        <a href="#">Home</a>
-        <a href="#about">About</a>
-        <a href="#loan-types">Loan Types</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <a href="#apply" class="header-cta">Apply Now</a>
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-  </header>
+  <style id="credo-header-style">
+  /* 1. Core variables from your index.html to ensure exact colors/spacing */
+  :root {
+    --primary: #0066FF !important;
+    --primary-dark: #0052CC !important;
+    --primary-light: #E6F0FF !important;
+    --dark: #0A1628 !important;
+    --gray-700: #374151 !important;
+    --gray-100: #F3F4F6 !important;
+    --white: #FFFFFF !important;
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1) !important;
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1) !important;
+    --radius-full: 9999px !important;
+    --radius: 12px !important;
+  }
+
+  /* 2. Header Layout Overrides */
+  .header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    background: rgba(255,255,255,0.98) !important;
+    backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid var(--gray-100) !important;
+    height: 70px !important; /* Fixed height for consistency */
+    display: block !important;
+  }
+
+  .header-inner {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0.75rem 1.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+  }
+
+  /* Logo Styles */
+  .logo { display: flex !important; align-items: center !important; gap: 10px !important; text-decoration: none !important; }
+  .logo-img { height: 42px !important; width: auto !important; border-radius: 8px !important; object-fit: contain !important; }
+  .logo-text { font-size: 1.4rem !important; font-weight: 700 !important; color: var(--dark) !important; }
+  .logo-text span { color: var(--primary) !important; }
+
+  /* Navigation Links (Desktop) */
+  .nav-links { display: flex !important; gap: 1.5rem !important; align-items: center !important; }
+  .nav-links a {
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    color: var(--gray-700) !important;
+    text-decoration: none !important;
+    transition: color 0.2s !important;
+  }
+  .nav-links a:hover { color: var(--primary) !important; }
+
+  .header-cta {
+    background: var(--primary) !important;
+    color: var(--white) !important;
+    padding: 0.65rem 1.25rem !important;
+    border-radius: var(--radius-full) !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+  }
+
+  /* Dropdown Styles for 'More' */
+  .dropdown { position: relative !important; }
+  .dropdown-content {
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    background: white !important;
+    min-width: 160px !important;
+    box-shadow: var(--shadow-lg) !important;
+    border-radius: var(--radius) !important;
+    padding: 0.5rem 0 !important;
+    border: 1px solid var(--gray-100) !important;
+    z-index: 1001 !important;
+  }
+  .dropdown:hover .dropdown-content { display: block !important; }
+  .dropdown-content a { display: block !important; padding: 0.75rem 1rem !important; }
+
+  /* Mobile Toggle Button */
+  .mobile-menu-btn {
+    display: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 8px !important;
+  }
+
+  /* Mobile Menu Container */
+  .mobile-nav {
+    display: none !important;
+    position: fixed !important;
+    top: 70px !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: var(--white) !important;
+    padding: 1rem !important;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 999 !important;
+    border-top: 1px solid var(--gray-100) !important;
+  }
+
+  /* The crucial fix: this class makes the menu appear */
+  .mobile-nav.active { display: block !important; }
+
+  .mobile-nav a {
+    display: block !important;
+    padding: 0.875rem 1rem !important;
+    color: var(--gray-700) !important;
+    text-decoration: none !important;
+    border-radius: var(--radius) !important;
+  }
+
+  /* Responsive Logic */
+  @media (max-width: 992px) {
+    .nav-links { display: none !important; }
+    .mobile-menu-btn { display: block !important; }
+  }
+</style>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=100&auto=format&fit=crop" alt="Logo" class="logo-img">
+      <div class="logo-text">Credo<span>Finance</span></div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      
+      <div class="dropdown">
+        <a href="#" class="dropdown-trigger">More ▼</a>
+        <div class="dropdown-content">
+          <a href="type.html">Loan Types</a>
+          <a href="how.html">How It Works</a>
+        </div>
+      </div>
+
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+      <a href="profile.html">Profile</a>
+      <a href="apply.html" target="_blank" class="header-cta">Apply Now</a>
+    </nav>
+
+    <button class="mobile-menu-btn" id="credo-mobile-toggle">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </div>
+
+  <nav class="mobile-nav" id="credo-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="type.html">Loan Types</a>
+    <a href="how.html">How It Works</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+    <a href="profile.html">Profile</a>
+    <a href="apply.html" target="_blank" style="background:var(--primary); color:white; text-align:center;">Apply Now</a>
+  </nav>
+</header>
+
+<script>
+  (function() {
+    const btn = document.getElementById('credo-mobile-toggle');
+    const menu = document.getElementById('credo-mobile-menu');
+
+    if (btn && menu) {
+      btn.onclick = function(e) {
+        e.preventDefault();
+        menu.classList.toggle('active');
+      };
+
+      // Close menu when clicking a link
+      menu.querySelectorAll('a').forEach(link => {
+        link.onclick = function() {
+          menu.classList.remove('active');
+        };
+      });
+    }
+  })();
+</script>
 
   <!-- Mobile Navigation -->
   <nav class="mobile-nav" id="mobileNav">
@@ -2214,7 +2377,7 @@
     <a href="#how-it-works">How It Works</a>
     <a href="#reviews">Reviews</a>
     <a href="#contact">Contact</a>
-    <a href="#apply" style="background: var(--primary); color: var(--white); text-align: center; margin-top: 0.5rem;">Apply Now</a>
+    <a href="href="apply.html" style="background: var(--primary); color: var(--white); text-align: center; margin-top: 0.5rem;">Apply Now</a>
   </nav>
 
   <!-- ============================================
@@ -2254,7 +2417,7 @@
       <h1>Get the Funding You Need, Fast & Hassle-Free</h1>
       <p>Apply today and get up to R5,000,000 in financing. No collateral. No stress. Compare 19+ trusted lenders and find the best rates tailored for you.</p>
       <div class="hero-ctas">
-        <a href="#apply" class="btn-primary">Apply Now</a>
+        <a href="href="apply.html" class="btn-primary">Apply Now</a>
         <a href="#loan-types" class="btn-secondary">See Loan Types</a>
       </div>
       <div class="trust-strip">
