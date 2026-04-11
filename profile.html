@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Credo Finance | Track Your Application</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066FF;
+            --primary-dark: #0052CC;
+            --primary-light: #E6F0FF;
+            --secondary: #00C896;
+            --secondary-light: #E6FFF7;
+            --accent: #FF6B35;
+            --dark: #0A1628;
+            --gray-900: #1A2332;
+            --gray-700: #374151;
+            --gray-600: #4B5563;
+            --gray-500: #6B7280;
+            --gray-400: #9CA3AF;
+            --gray-300: #D1D5DB;
+            --gray-200: #E5E7EB;
+            --gray-100: #F3F4F6;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --success-light: #D1FAE5;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--gray-100); color: var(--gray-700); line-height: 1.6; overflow-x: hidden; }
+
+        .mg-fade-up { opacity: 0; transform: translateY(48px) rotateX(-8deg); animation: mgFadeUp 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
+        .mg-fade-up.d1 { animation-delay: 0.1s; }
+        .mg-fade-up.d2 { animation-delay: 0.2s; }
+        .mg-fade-up.d3 { animation-delay: 0.3s; }
+        @keyframes mgFadeUp { 0% { opacity: 0; transform: translateY(48px) rotateX(-8deg); } 100% { opacity: 1; transform: translateY(0) rotateX(0); } }
+
+        .mg-reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.7s ease; filter: blur(3px); }
+        .mg-reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+        
+        .mg-shimmer { position: relative; overflow: hidden; }
+        .mg-shimmer::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.4) 40%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.4) 60%, transparent 80%);
+            transform: translateX(-100%) skewX(-15deg); transition: transform 0s;
+        }
+        .mg-shimmer:hover::after { transform: translateX(100%) skewX(-15deg); transition: transform 0.75s ease; }
+
+        .mg-pulse-ring { position: relative; }
+        .mg-pulse-ring::before, .mg-pulse-ring::after {
+            content: ''; position: absolute; inset: -4px; border-radius: inherit;
+            border: 2px solid rgba(0,102,255,0.5); animation: mgPulseRing 2.4s ease-out infinite;
+        }
+        .mg-pulse-ring::after { animation-delay: 1.2s; }
+        @keyframes mgPulseRing { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.25); opacity: 0; } }
+
+        .top-nav {
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-200); padding: 0.875rem 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: var(--shadow-sm);
+        }
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-icon {
+            width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 800; font-size: 1.1rem;
+        }
+        .logo-text { font-size: 1.25rem; font-weight: 700; color: var(--dark); }
+        .logo-text span { color: var(--primary); }
+        
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .nav-link { text-decoration: none; color: var(--gray-600); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .nav-link:hover { color: var(--primary); }
+        .logout-link { color: var(--error); }
+        .logout-link:hover { color: #dc2626; }
+        .user-tag { background: var(--primary-light); color: var(--primary); padding: 6px 14px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(0,102,255,0.2); }
+
+        .page-hero-bg {
+            position: fixed; top: 0; left: 0; right: 0; height: 45vh; z-index: -1;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a365d 50%, var(--primary-dark) 100%);
+            overflow: hidden;
+        }
+        
+        .main-content { margin-top: 80px; padding: 2rem 0 4rem; position: relative; z-index: 2; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+        #loginSection { min-height: 70vh; display: flex; align-items: center; justify-content: center; }
+        .auth-card {
+            background: var(--white); padding: 3rem; border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl); width: 100%; max-width: 420px; text-align: center;
+            border: 1px solid var(--gray-200);
+        }
+        .auth-card h2 { font-weight: 800; color: var(--dark); font-size: 1.75rem; }
+        .auth-card input, .auth-card select {
+            width: 100%; padding: 1rem; border: 1px solid var(--gray-300);
+            border-radius: var(--radius); margin: 0.75rem 0; font-size: 0.95rem;
+            transition: all 0.2s; outline: none; background: white;
+        }
+        .auth-card input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+
+        .btn-primary {
+            background: var(--primary); color: white; border: none; padding: 1rem;
+            border-radius: var(--radius-full); font-weight: 700; width: 100%;
+            cursor: pointer; transition: all 0.3s; font-size: 0.95rem; margin-top: 1rem;
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,102,255,0.3); }
+
+        .status-card {
+            background: var(--white); border-radius: var(--radius-lg); padding: 2rem;
+            margin-bottom: 2rem; border: 1px solid var(--gray-200); box-shadow: var(--shadow-lg);
+            overflow-x: auto; /* Ensures horizontal stability */
+        }
+        .status-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-100); min-width: 600px; }
+        
+        .stepper { display: flex; justify-content: space-between; position: relative; min-width: 600px; padding-bottom: 10px; }
+        .step { text-align: center; width: 100%; z-index: 2; }
+        .step-circle {
+            width: 36px; height: 36px; background: var(--gray-100); border: 2px solid var(--gray-200);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 0.75rem; font-size: 0.85rem; color: var(--gray-400); transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+        }
+        .step.active .step-circle { background: var(--white); border-color: var(--primary); color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
+        .step.completed .step-circle { background: var(--secondary); border-color: var(--secondary); color: white; }
+        .step-label { font-size: 0.7rem; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .progress-line { position: absolute; top: 18px; left: 5%; right: 5%; height: 3px; background: var(--gray-200); z-index: 1; border-radius: 3px; }
+        .progress-active { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: 1s cubic-bezier(0.22,1,0.36,1); border-radius: 3px; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; align-items: start; }
+
+        .sim-box {
+            background: linear-gradient(135deg, var(--dark) 0%, #11284a 100%);
+            border-radius: var(--radius-lg); padding: 2rem 1.5rem;
+            color: white; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.1);
+        }
+        .sim-header { display: flex; justify-content: space-between; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; position: relative; z-index: 2; }
+        .sys-status { color: var(--secondary); font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; animation: blink 2s infinite; display: flex; align-items: center; gap: 4px; }
+        .sys-status::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--secondary); border-radius: 50%; }
+
+        .panels-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; position: relative; z-index: 2; }
+        .panel { flex: 1; background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.25rem 0.75rem; text-align: center; z-index: 5; backdrop-filter: blur(4px); }
+        .p-label { font-size: 0.6rem; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; font-weight: 700; }
+        .p-val { font-size: 1.1rem; font-weight: 800; }
+        
+        .edit-field { color: #7AB8FF; border-bottom: 1px dashed rgba(255,255,255,0.3); cursor: text; outline: none; font-size: 0.75rem; display: block; margin-top: 8px; padding-bottom: 2px; transition: 0.2s; }
+
+        .money { position: absolute; width: 30px; height: 16px; background: var(--secondary); border-radius: 3px; z-index: 10; opacity: 0; box-shadow: 0 0 10px var(--secondary); }
+        @keyframes flow { 0% { left: 25%; opacity: 0; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } 100% { left: 65%; opacity: 0; transform: scale(0.8); } }
+
+        .card { background: var(--white); border-radius: var(--radius-lg); padding: 1.75rem; border: 1px solid var(--gray-200); margin-bottom: 1.5rem; box-shadow: var(--shadow-sm); transition: 0.3s; }
+        .card-title { font-weight: 800; font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--dark); display: flex; align-items: center; gap: 10px; }
+        .card-title i { color: var(--primary); background: var(--primary-light); padding: 8px; border-radius: 8px; font-size: 0.9rem; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.9rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--gray-100); }
+        .row-label { color: var(--gray-500); font-weight: 500; }
+        .row-val { font-weight: 700; color: var(--dark); }
+
+        .log-container { display: flex; flex-direction: column; gap: 12px; }
+        .log-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; background: var(--gray-50); border-radius: var(--radius); border-left: 4px solid var(--gray-300); transition: 0.3s; }
+        .log-item.done { border-left-color: var(--secondary); background: var(--success-light); }
+        .log-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--gray-400); box-shadow: var(--shadow-sm); }
+        .log-text { font-size: 0.85rem; font-weight: 600; color: var(--gray-700); }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 1.5rem; }
+        .btn-secondary { background: var(--white); color: var(--gray-700); border: 1px solid var(--gray-300); padding: 0.875rem; border-radius: var(--radius-full); font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; flex: 1; font-size: 0.9rem; transition: 0.2s; }
+
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 22, 40, 0.85); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .popup-box { background: var(--white); padding: 2.5rem; border-radius: var(--radius-lg); text-align: center; max-width: 400px; width: 90%; animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1); box-shadow: var(--shadow-xl); }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .wa-btn { background: #25D366; color: white; text-decoration: none; padding: 1rem 1.5rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; width: 100%; transition: 0.2s; }
+        
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        @media (max-width: 850px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .info-grid { grid-template-columns: 1fr; }
+            /* Mobile scroll setup for horizontal stepper */
+            .status-card { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-hero-bg"></div>
+
+    <nav class="top-nav" id="topNav" style="display: none;">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">CF</div>
+            <div class="logo-text">Credo<span>Finance</span></div>
+        </a>
+        <div class="nav-right">
+            <a href="index.html" class="nav-link">Home</a>
+            <div class="user-tag" id="userBadge">User</div>
+            <a class="nav-link logout-link" onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="loginSection" class="container">
+            <div class="auth-card mg-fade-up d1">
+                <div class="logo" style="justify-content: center; margin-bottom: 1.5rem;">
+                    <div class="logo-icon">CF</div>
+                </div>
+                <h2 style="margin-bottom: 0.5rem;">Welcome Back</h2>
+                <p style="font-size: 0.9rem; color: var(--gray-500);">Sign in to track your application status</p>
+                <input type="email" id="emailInput" placeholder="Enter registered email address">
+                <button class="btn-primary mg-pulse-ring" onclick="handleLogin()">Continue &rarr;</button>
+                <a href="index.html" style="display: block; margin-top: 1.5rem; font-size: 0.85rem; color: var(--gray-500); text-decoration: none; font-weight: 600;">&larr; Back to Home</a>
+            </div>
+        </section>
+
+        <div id="verifyOverlay" class="popup-overlay">
+            <div class="auth-card" style="max-width: 400px; padding: 2.5rem;">
+                <i class="fas fa-shield-check" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h2 style="font-size: 1.5rem;">Security Verification</h2>
+                <p style="font-size: 0.85rem; color: var(--gray-500); margin-bottom: 1rem;">Please confirm your details to unlock dashboard access.</p>
+                
+                <select id="countrySelect">
+                    <option value="R">South Africa (ZAR)</option>
+                    <option value="N$">Namibia (NAD)</option>
+                    <option value="P">Botswana (BWP)</option>
+                    <option value="E">Eswatini (SZL)</option>
+                    <option value="M">Lesotho (LSL)</option>
+                </select>
+                <input type="text" id="idVerifyInput" placeholder="Enter ID / Passport Number">
+                
+                <button class="btn-primary" onclick="verifyIdAndProceed()">Unlock Dashboard</button>
+                <p style="margin-top: 1rem; font-size: 0.75rem; color: var(--gray-400); cursor: pointer;" onclick="location.reload()">Cancel</p>
+            </div>
+        </div>
+
+        <section id="dashboardSection" class="container" style="display: none;">
+            <div class="status-card mg-fade-up d1">
+                <div class="status-header">
+                    <div>
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1px;">Current Status</span>
+                        <h4 id="statusText" style="color: var(--primary); font-size: 1.1rem; font-weight: 800; margin-top: 4px;">Initializing...</h4>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1px;">Completion</span>
+                        <div id="percText" style="font-weight: 800; font-size: 1.5rem; color: var(--dark); margin-top: 2px;">0%</div>
+                    </div>
+                </div>
+                <div class="stepper">
+                    <div class="progress-line"><div id="progressFill" class="progress-active"></div></div>
+                    <div class="step active" id="s1"><div class="step-circle"><i class="fas fa-file-alt"></i></div><div class="step-label">Apply</div></div>
+                    <div class="step" id="s2"><div class="step-circle"><i class="fas fa-sync-alt fa-spin"></i></div><div class="step-label">Process</div></div>
+                    <div class="step" id="s3"><div class="step-circle"><i class="fas fa-award"></i></div><div class="step-label">Qualified</div></div>
+                    <div class="step" id="s4"><div class="step-circle"><i class="fas fa-search"></i></div><div class="step-label">Review</div></div>
+                    <div class="step" id="s5"><div class="step-circle"><i class="fas fa-check-double"></i></div><div class="step-label">Approved</div></div>
+                    <div class="step" id="s6" onclick="showPopup()" style="cursor: pointer;"><div class="step-circle"><i class="fas fa-hand-holding-usd"></i></div><div class="step-label">Payout Ready</div></div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <aside class="mg-fade-up d2">
+                    <div class="sim-box mg-shimmer">
+                        <div class="sim-header">
+                            <span>LIVE PAYOUT SYSTEM</span>
+                            <span class="sys-status">SECURE LINK ACTIVE</span>
+                        </div>
+                        <div class="panels-row">
+                            <div class="panel">
+                                <div class="p-label">Treasury Escrow</div>
+                                <div class="p-val" id="sim-amt" style="color:var(--secondary)">R0</div>
+                                <div style="font-size: 0.55rem; color: rgba(255,255,255,0.4); margin-top: 4px; letter-spacing: 1px;">REF #<span id="sim-id">---</span></div>
+                            </div>
+                            <div id="anim-zone"></div>
+                            <div class="panel" style="border-color: rgba(0,102,255,0.4); background: rgba(0,102,255,0.1);">
+                                <div class="p-label">Recipient Vault</div>
+                                <div class="p-val" id="sim-name" style="font-size: 0.85rem;">Loading...</div>
+                                <div class="edit-field" id="edit-bank" contenteditable="true" oninput="saveBank()">Enter Bank Name</div>
+                                <div class="edit-field" id="edit-acc" contenteditable="true" oninput="saveBank()">Enter Account Number</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group"><a href="index.html" class="btn-secondary">Return to Home</a></div>
+                </aside>
+
+                <div class="info-column mg-fade-up d3">
+                    <div class="card mg-shimmer">
+                        <div class="card-title"><i class="fas fa-file-invoice-dollar"></i> Application Overview</div>
+                        <div class="info-grid">
+                            <div>
+                                <div class="row"><span class="row-label">Principal Amount</span><span class="row-val" id="d-amt">R0</span></div>
+                                <div class="row"><span class="row-label">Repayment Term</span><span class="row-val" id="d-term">---</span></div>
+                                <div class="row"><span class="row-label">Est. Monthly</span><span class="row-val" id="d-repay" style="color:var(--primary)">R0</span></div>
+                            </div>
+                            <div>
+                                <div class="row"><span class="row-label">ID Number</span><span class="row-val" id="d-id">---</span></div>
+                                <div class="row"><span class="row-label">Loan Purpose</span><span class="row-val" id="d-purpose">---</span></div>
+                                <div class="row"><span class="row-label">Mobile Number</span><span class="row-val" id="d-phone">---</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+<div class="card">
+                        <div class="card-title"><i class="fas fa-shield-alt"></i> Security & Processing Log</div>
+                        <div class="log-container">
+                            <div class="log-item done"><div class="log-icon"><i class="fas fa-check"></i></div><div class="log-text">Application Details Encrypted & Submitted</div></div>
+                            <div class="log-item done"><div class="log-icon"><i class="fas fa-check"></i></div><div class="log-text">Identity & KYC Documentation Verified</div></div>
+                            <div class="log-item done"><div class="log-icon"><i class="fas fa-check"></i></div><div class="log-text">Automated Credit Criteria Passed</div></div>
+                            <div class="log-item" id="log-review"><div class="log-icon"><i class="fas fa-spinner fa-spin"></i></div><div class="log-text">Awaiting Final Compliance Processing</div></div>
+                            <div class="log-item" id="log-approved"><div class="log-icon"><i class="fas fa-lock"></i></div><div class="log-text">Treasury Release Authorization Required</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup-box">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+            <h2>Disbursement Ready</h2>
+            <p>Your authorized funds of <span id="pop-amt" style="font-weight: 800; color: var(--dark);">R0</span> are staged for immediate transfer. Please contact Treasury to finalize the release.</p>
+            <a href="https://wa.me/27707356707" class="wa-btn"><i class="fab fa-whatsapp"></i> Chat with Treasury Now</a>
+            <p style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--gray-400); cursor:pointer;" onclick="hidePopup()">Close Window</p>
+        </div>
+    </div>
+
+    <script>
+        const CFG = {
+            API: 'https://api.baserow.io/api/database/rows/table/561419/?user_field_names=true',
+            KEY: 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL',
+            FIELDS: { NAME: 'name', AMT: 'loanAmount', EMAIL: 'Email', PHONE: 'Phonenumber', TYPE: 'loanType', PURPOSE: 'loanPurpose', TERM: 'loanTearm', ID_NO: 'idNo' }
+        };
+
+        let userSession = null;
+        let currencySymbol = "R";
+
+        async function handleLogin() {
+            const email = document.getElementById('emailInput').value.trim().toLowerCase();
+            if(!email) return alert("Email required");
+            const btn = document.querySelector('#loginSection .btn-primary');
+            btn.innerText = "Searching...";
+
+            try {
+                const res = await fetch(CFG.API, { headers: { 'Authorization': `Token ${CFG.KEY}` } });
+                const data = await res.json();
+                const user = data.results.find(u => u[CFG.FIELDS.EMAIL]?.toLowerCase().includes(email));
+
+                if(user) {
+                    userSession = user;
+                    // Show ID/Country popup
+                    document.getElementById('verifyOverlay').style.display = 'flex';
+                } else {
+                    alert("No record found for this email.");
+                    btn.innerText = "Continue →";
+                }
+            } catch (e) { alert("Error connecting to server."); }
+        }
+
+        function verifyIdAndProceed() {
+            const inputId = document.getElementById('idVerifyInput').value.trim();
+            const countrySym = document.getElementById('countrySelect').value;
+            
+            const dbId = String(userSession[CFG.FIELDS.ID_NO]).trim();
+
+            if(inputId === dbId) {
+                currencySymbol = countrySym;
+                localStorage.setItem('oyster_auth', userSession[CFG.FIELDS.EMAIL]);
+                document.getElementById('verifyOverlay').style.display = 'none';
+                initDashboard(userSession);
+            } else {
+                alert("Verification failed. ID number does not match our records.");
+            }
+        }
+
+        function initDashboard(u) {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
+            document.getElementById('topNav').style.display = 'flex';
+
+            const rawAmt = parseFloat(u[CFG.FIELDS.AMT]) || 0;
+            const term = parseInt(u[CFG.FIELDS.TERM]) || 1;
+            const repay = ((rawAmt * 1.03) / term).toFixed(2);
+
+            document.getElementById('userBadge').innerText = u[CFG.FIELDS.NAME];
+            document.getElementById('sim-amt').innerText = `${currencySymbol}${rawAmt.toLocaleString()}`;
+            document.getElementById('sim-id').innerText = u.id;
+            document.getElementById('sim-name').innerText = u[CFG.FIELDS.NAME];
+            document.getElementById('pop-amt').innerText = `${currencySymbol}${rawAmt.toLocaleString()}`;
+            
+            document.getElementById('d-amt').innerText = `${currencySymbol}${rawAmt.toLocaleString()}`;
+            document.getElementById('d-term').innerText = `${term} Month`;
+            document.getElementById('d-repay').innerText = `${currencySymbol}${repay}`;
+            document.getElementById('d-purpose').innerText = u[CFG.FIELDS.PURPOSE];
+            document.getElementById('d-id').innerText = u[CFG.FIELDS.ID_NO];
+            document.getElementById('d-phone').innerText = u[CFG.FIELDS.PHONE];
+
+            animateSteps();
+            moneyRain();
+        }
+
+        function animateSteps() {
+            const steps = [
+                {p: 20, s: 's2', m: 'Processing Data...'},
+                {p: 45, s: 's3', m: 'Criteria Qualified'},
+                {p: 75, s: 's4', m: 'Final Treasury Review'},
+                {p: 99, s: 's5', m: 'APPROVED - RELEASE FUND'}
+            ];
+            steps.forEach((st, i) => {
+                setTimeout(() => {
+                    document.getElementById('progressFill').style.width = st.p + '%';
+                    document.getElementById('percText').innerText = st.p + '%';
+                    document.getElementById(st.s).classList.add('completed');
+                    document.getElementById('statusText').innerText = st.m;
+                    if(st.p === 99) {
+                        document.getElementById('s6').classList.add('active');
+                        document.getElementById('statusText').style.color = "var(--secondary)";
+                    }
+                }, (i + 1) * 1500);
+            });
+        }
+
+        function moneyRain() {
+            setInterval(() => {
+                const zone = document.getElementById('anim-zone');
+                if(!zone) return;
+                const note = document.createElement('div');
+                note.className = 'money';
+                note.style.top = '48%';
+                note.style.animation = 'flow 1.5s linear forwards';
+                zone.appendChild(note);
+                setTimeout(() => note.remove(), 1500);
+            }, 1000);
+        }
+
+        function saveBank() {
+            const b = document.getElementById('edit-bank').innerText;
+            const a = document.getElementById('edit-acc').innerText;
+            if(b.length > 3 && a.length > 5 && b !== 'Enter Bank Name') setTimeout(showPopup, 2000);
+        }
+
+        function logout() {
+            localStorage.removeItem('oyster_auth');
+            location.reload();
+        }
+
+        function showPopup() { document.getElementById('popupOverlay').style.display = 'flex'; }
+        function hidePopup() { document.getElementById('popupOverlay').style.display = 'none'; }
+
+        window.onload = () => {
+            const s = localStorage.getItem('oyster_auth');
+            if(s) { document.getElementById('emailInput').value = s; }
+        };
+        
+        
+        function animateSteps() {
+            const steps = [
+                {p: 20, s: 's2', m: 'Processing Data...'},
+                {p: 45, s: 's3', m: 'Criteria Qualified'},
+                {p: 75, s: 's4', m: 'Final Treasury Review'},
+                {p: 99, s: 's5', m: 'APPROVED - RELEASE FUND'}
+            ];
+            steps.forEach((st, i) => {
+                setTimeout(() => {
+                    document.getElementById('progressFill').style.width = st.p + '%';
+                    document.getElementById('percText').innerText = st.p + '%';
+                    document.getElementById(st.s).classList.add('completed');
+                    document.getElementById('statusText').innerText = st.m;
+                    if(st.p > 70) {
+                        const rLog = document.getElementById('log-review');
+                        rLog.classList.add('done');
+                        rLog.querySelector('i').className = 'fas fa-check';
+                    }
+                    if(st.p === 99) {
+                        document.getElementById('s6').classList.add('active');
+                        document.getElementById('statusText').style.color = "var(--secondary)";
+                        const aLog = document.getElementById('log-approved');
+                        aLog.classList.add('done');
+                        aLog.querySelector('i').className = 'fas fa-check';
+                    }
+                }, (i + 1) * 2000);
+            });
+        }
+
+        function moneyRain() {
+            setInterval(() => {
+                const note = document.createElement('div');
+                note.className = 'money';
+                note.style.top = '48%';
+                note.style.animation = 'flow 1.5s linear forwards';
+                document.getElementById('anim-zone').appendChild(note);
+                setTimeout(() => note.remove(), 1500);
+            }, 1000);
+        }
+
+        function saveBank() {
+            const b = document.getElementById('edit-bank').innerText;
+            const a = document.getElementById('edit-acc').innerText;
+            if(userSession) {
+                localStorage.setItem(`bk_${userSession.id}`, b);
+                localStorage.setItem(`ac_${userSession.id}`, a);
+            }
+            if(b.length > 3 && a.length > 5 && b !== 'Enter Bank Name') setTimeout(showPopup, 2000);
+        }
+
+        function logout() {
+            if(confirm("Are you sure you want to sign out?")) {
+                localStorage.removeItem('oyster_auth');
+                location.reload();
+            }
+        }
+
+        function showPopup() { document.getElementById('popupOverlay').style.display = 'flex'; }
+        function hidePopup() { document.getElementById('popupOverlay').style.display = 'none'; }
+
+        window.onload = () => {
+            const s = localStorage.getItem('oyster_auth');
+            if(s) { document.getElementById('emailInput').value = s; handleLogin(); }
+        };
+    </script>
+</body>
+</html>

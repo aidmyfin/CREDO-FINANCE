@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works - Credo Finance</title>
+  <meta name="description" content="Discover how Credo Finance makes getting a loan simple, fast, and transparent. Apply in minutes, get approved fast, and receive funds the same day.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0066FF;
+      --primary-dark: #0052CC;
+      --primary-light: #E6F0FF;
+      --secondary: #00C896;
+      --secondary-light: #E6FFF7;
+      --accent: #FF6B35;
+      --dark: #0A1628;
+      --gray-900: #1A2332;
+      --gray-700: #374151;
+      --gray-600: #4B5563;
+      --gray-500: #6B7280;
+      --gray-400: #9CA3AF;
+      --gray-300: #D1D5DB;
+      --gray-200: #E5E7EB;
+      --gray-100: #F3F4F6;
+      --white: #FFFFFF;
+      --warning: #F59E0B;
+      --success: #10B981;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--white);
+      color: var(--gray-700);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    .mg-fade-up {
+      opacity: 0;
+      transform: translateY(48px) rotateX(-8deg);
+      animation: mgFadeUp 0.9s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .mg-fade-up.d1 { animation-delay: 0.08s; }
+    .mg-fade-up.d2 { animation-delay: 0.16s; }
+    .mg-fade-up.d3 { animation-delay: 0.24s; }
+    .mg-fade-up.d4 { animation-delay: 0.32s; }
+    .mg-fade-up.d5 { animation-delay: 0.40s; }
+    @keyframes mgFadeUp {
+      0% { opacity: 0; transform: translateY(48px) rotateX(-8deg); }
+      60% { opacity: 1; }
+      100% { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+
+    .mg-scale-in {
+      opacity: 0;
+      transform: scale(0.4) rotate(-12deg);
+      animation: mgScaleIn 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes mgScaleIn {
+      0% { opacity: 0; transform: scale(0.4) rotate(-12deg); }
+      50% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    .mg-reveal {
+      opacity: 0;
+      transform: translateY(40px) perspective(800px) rotateX(-5deg);
+      transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.75s cubic-bezier(0.22,1,0.36,1),
+                  filter 0.75s ease;
+      filter: blur(4px);
+    }
+    .mg-reveal.visible {
+      opacity: 1;
+      transform: translateY(0) perspective(800px) rotateX(0);
+      filter: blur(0);
+    }
+    .mg-reveal.d1 { transition-delay: 0.05s; }
+    .mg-reveal.d2 { transition-delay: 0.12s; }
+    .mg-reveal.d3 { transition-delay: 0.19s; }
+    .mg-reveal.d4 { transition-delay: 0.26s; }
+    .mg-reveal.d5 { transition-delay: 0.33s; }
+    .mg-reveal.d6 { transition-delay: 0.40s; }
+
+    .mg-text-gradient {
+      background: linear-gradient(90deg, #0066FF 0%, #00C896 25%, #0066FF 50%, #00C896 75%, #0066FF 100%);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: mgGradientShift 4s linear infinite;
+    }
+    @keyframes mgGradientShift {
+      0% { background-position: 0% center; }
+      100% { background-position: 300% center; }
+    }
+
+    .mg-float {
+      animation: mgFloatElement 4s ease-in-out infinite;
+    }
+    @keyframes mgFloatElement {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .mg-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .mg-shimmer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.4) 40%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.4) 60%, transparent 80%);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: transform 0s;
+    }
+    .mg-shimmer:hover::after {
+      transform: translateX(100%) skewX(-15deg);
+      transition: transform 0.75s ease;
+    }
+
+    .mg-pulse-ring {
+      position: relative;
+    }
+    .mg-pulse-ring::before, .mg-pulse-ring::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: inherit;
+      border: 2px solid rgba(0,102,255,0.5);
+      animation: mgPulseRing 2.4s ease-out infinite;
+    }
+    .mg-pulse-ring::after { animation-delay: 1.2s; }
+    @keyframes mgPulseRing {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.25); opacity: 0; }
+    }
+
+    .mg-spin-slow {
+      animation: mgSpinSlow 15s linear infinite;
+    }
+    @keyframes mgSpinSlow {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Ripple */
+    .mg-ripple { position: relative; overflow: hidden; }
+    .mg-ripple-wave {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transform: scale(0);
+      animation: mgRipple 0.6s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes mgRipple { to { transform: scale(4); opacity: 0; } }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--gray-100);
+      transition: box-shadow 0.3s, background 0.3s;
+    }
+    .header.scrolled {
+      box-shadow: 0 4px 24px rgba(0,102,255,0.08);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-icon svg { width: 22px; height: 22px; fill: white; }
+    .logo-text {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+    .logo-text span { color: var(--primary); }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--primary);
+      transition: width 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after { width: 100%; }
+    .header-cta {
+      background: var(--primary);
+      color: var(--white);
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(0,102,255,0.3);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .header-cta:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0,102,255,0.45);
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 60px; left: 0; right: 0;
+      background: var(--white);
+      padding: 1rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      border-top: 1px solid var(--gray-100);
+    }
+    .mobile-nav.active { display: block; }
+    .mobile-nav a {
+      display: block;
+      padding: 0.875rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none;
+      border-radius: var(--radius);
+      transition: all 0.2s;
+    }
+    .mobile-nav a:hover { background: var(--primary-light); color: var(--primary); }
+
+    /* ============================================================
+       PAGE HERO
+    ============================================================ */
+    .page-hero {
+      position: relative;
+      background: linear-gradient(135deg, var(--dark) 0%, #0A2A5E 60%, #0D3D8C 100%);
+      padding: 9rem 1.5rem 6rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 400px; height: 400px;
+      top: -100px; left: -100px;
+      background: radial-gradient(circle, rgba(0,102,255,0.3) 0%, transparent 65%);
+    }
+    .orb-2 {
+      width: 350px; height: 350px;
+      bottom: -80px; right: -80px;
+      background: radial-gradient(circle, rgba(0,200,150,0.25) 0%, transparent 65%);
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .page-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,102,255,0.2);
+      border: 1px solid rgba(0,102,255,0.4);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #7AB8FF;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+    }
+    .page-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    .page-hero p {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: rgba(255,255,255,0.82);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb svg { width: 14px; height: 14px; }
+
+    /* ============================================================
+       SECTIONS
+    ============================================================ */
+    .section {
+      padding: 5rem 1.5rem;
+    }
+    .section-alt {
+      background: var(--gray-100);
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-label {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 1rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray-500);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       PROCESS STEPS — LARGE
+    ============================================================ */
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .step-row {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      align-items: center;
+      gap: 0;
+    }
+    .step-row:nth-child(even) .step-content { order: 3; }
+    .step-row:nth-child(even) .step-visual { order: 1; }
+    .step-row:nth-child(even) .step-connector { order: 2; }
+
+    .step-content {
+      padding: 2.5rem;
+    }
+    .step-number-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 800;
+      border-radius: 50%;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 8px 24px rgba(0,102,255,0.35);
+    }
+    .step-content h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+    }
+    .step-content p {
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+    .step-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .step-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--gray-600);
+    }
+    .step-features li::before {
+      content: '';
+      width: 20px; height: 20px;
+      background: var(--secondary);
+      border-radius: 50%;
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 12px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .step-visual {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      min-height: 320px;
+      position: relative;
+    }
+    .step-visual img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .step-visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,102,255,0.15) 0%, rgba(0,200,150,0.1) 100%);
+    }
+    .step-visual-badge {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 0.875rem 1.25rem;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--dark);
+    }
+    .step-visual-badge svg { width: 20px; height: 20px; }
+    .badge-dot {
+      width: 10px; height: 10px;
+      background: var(--secondary);
+      border-radius: 50%;
+      animation: mgPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes mgPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    .step-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 1rem 0;
+    }
+    .connector-line {
+      width: 3px;
+      height: 120px;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+      border-radius: 2px;
+      position: relative;
+    }
+    .connector-line::before, .connector-line::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px; height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+    .connector-line::before { top: 0; }
+    .connector-line::after { bottom: 0; background: var(--secondary); }
+
+    /* ============================================================
+       QUICK STEPS NUMBERED LIST (alternate presentation)
+    ============================================================ */
+    .quick-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .quick-step-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .quick-step-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+    .quick-step-num {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--primary-light);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .quick-step-icon {
+      width: 48px; height: 48px;
+      background: var(--primary-light);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .quick-step-icon svg { width: 24px; height: 24px; stroke: var(--primary); fill: none; stroke-width: 2; }
+    .quick-step-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .quick-step-card p {
+      font-size: 0.88rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       TIMELINE SECTION
+    ============================================================ */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-left: 60px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary), var(--primary));
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+      transition: all 0.3s ease;
+    }
+    .timeline-item:hover {
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+      transform: translateX(6px);
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -49px;
+      top: 1.75rem;
+      width: 20px; height: 20px;
+      background: var(--primary);
+      border: 3px solid var(--white);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(0,102,255,0.25);
+    }
+    .timeline-time {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-item h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+    }
+    .timeline-item p {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       REQUIREMENTS SECTION
+    ============================================================ */
+    .requirements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .req-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      transition: all 0.3s ease;
+    }
+    .req-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-4px);
+    }
+    .req-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .req-icon svg { width: 26px; height: 26px; }
+    .req-icon.blue { background: var(--primary-light); }
+    .req-icon.blue svg { stroke: var(--primary); fill: none; stroke-width: 2; }
+    .req-icon.green { background: #E6FFF7; }
+    .req-icon.green svg { stroke: var(--secondary); fill: none; stroke-width: 2; }
+    .req-icon.orange { background: #FFF3ED; }
+    .req-icon.orange svg { stroke: var(--accent); fill: none; stroke-width: 2; }
+    .req-icon.yellow { background: #FFFBEB; }
+    .req-icon.yellow svg { stroke: var(--warning); fill: none; stroke-width: 2; }
+    .req-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.35rem;
+    }
+    .req-card p {
+      font-size: 0.88rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       STATS BAR
+    ============================================================ */
+    .stats-bar {
+      background: linear-gradient(135deg, var(--dark) 0%, #0A2A5E 100%);
+      padding: 3.5rem 1.5rem;
+    }
+    .stats-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-item {}
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-value span { color: var(--secondary); }
+    .stat-label {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       FAQ
+    ============================================================ */
+    .faq-container {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .faq-item {
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .faq-item.open { border-color: var(--primary); }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+    }
+    .faq-icon {
+      width: 36px; height: 36px;
+      background: var(--primary-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .faq-icon svg { width: 18px; height: 18px; stroke: var(--primary); fill: none; stroke-width: 2; }
+    .faq-question h4 {
+      flex: 1;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .faq-toggle {
+      width: 20px; height: 20px;
+      stroke: var(--gray-400);
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-toggle { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-answer p {
+      padding: 0 1.5rem 1.25rem 4.5rem;
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       CTA BANNER
+    ============================================================ */
+    .cta-banner {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--primary) 0%, #0044BB 100%);
+      padding: 5rem 1.5rem;
+      text-align: center;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .cta-inner { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; }
+    .cta-inner h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .cta-inner p {
+      color: rgba(255,255,255,0.85);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      background: var(--white);
+      color: var(--primary);
+      padding: 0.875rem 2rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline-white {
+      background: transparent;
+      color: var(--white);
+      padding: 0.875rem 2rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.5);
+      transition: all 0.3s;
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--white);
+      transform: translateY(-3px);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.75);
+      padding: 4rem 1.5rem 2rem;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 2rem;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .footer-logo-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .footer-logo-icon svg { width: 20px; height: 20px; fill: white; }
+    .footer-brand-text {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .footer-col p { font-size: 0.88rem; line-height: 1.7; margin-bottom: 1rem; }
+    .footer-ncr {
+      display: inline-block;
+      background: rgba(0,102,255,0.15);
+      border: 1px solid rgba(0,102,255,0.3);
+      color: #7AB8FF;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.875rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1rem;
+    }
+    .footer-contact { font-size: 0.85rem; line-height: 1.9; }
+    .footer-contact a { color: var(--secondary); text-decoration: none; }
+    .footer-contact a:hover { text-decoration: underline; }
+    .footer-col h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+    }
+    .footer-social { display: flex; gap: 0.75rem; margin-top: 1rem; }
+    .social-btn {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .social-btn:hover { background: var(--primary); color: var(--white); }
+    .social-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    /* ============================================================
+       SCROLL PROGRESS
+    ============================================================ */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      z-index: 10001;
+      width: 0%;
+      transition: width 0.1s ease-out;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .step-row {
+        grid-template-columns: 1fr;
+      }
+      .step-row:nth-child(even) .step-content { order: unset; }
+      .step-row:nth-child(even) .step-visual { order: unset; }
+      .step-row:nth-child(even) .step-connector { order: unset; }
+      .step-connector { display: none; }
+      .step-visual { min-height: 240px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+    }
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.93V18h-2v-1.07C9.39 16.57 8 15.35 8 13.5c0-.28.22-.5.5-.5s.5.22.5.5c0 1.38 1.57 2 3 2s3-.62 3-2c0-2.23-5-2-5-5 0-1.62 1.39-2.57 3-2.93V5h2v1.07c1.39.36 2.5 1.35 2.5 2.93 0 .28-.22.5-.5.5s-.5-.22-.5-.5c0-1.38-1.57-2-3-2s-3 .62-3 2c0 2.22 5 1.97 5 5 0 1.85-1.39 2.43-3 2.93z"/></svg>
+      </div>
+      <span class="logo-text">Credo<span>Finance</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html" class="active">How It Works</a>
+      <a href="loan-types.html">Loan Types</a>
+      <a href="index.html#calculator">Calculator</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <a href="index.html#apply" class="header-cta">Apply Now</a>
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="how-it-works.html">How It Works</a>
+  <a href="loan-types.html">Loan Types</a>
+  <a href="index.html#calculator">Calculator</a>
+  <a href="index.html#contact">Contact</a>
+  <a href="index.html#apply" style="background:var(--primary);color:white;margin-top:0.5rem;border-radius:var(--radius-full);text-align:center;">Apply Now</a>
+</nav>
+
+<!-- ============================================================
+     PAGE HERO
+============================================================ -->
+<section class="page-hero">
+  <div class="orb-1 hero-orb"></div>
+  <div class="orb-2 hero-orb"></div>
+  <div class="page-hero-content">
+    <div class="page-label mg-fade-up d1">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Simple &amp; Fast Process
+    </div>
+    <h1 class="mg-fade-up d2">How <span class="mg-text-gradient">Credo Finance</span> Works</h1>
+    <p class="mg-fade-up d3">Get funded in as little as 24 hours. Our streamlined, fully digital process takes the stress out of borrowing — from application to approval to cash in your account.</p>
+    <div class="breadcrumb mg-fade-up d4">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      <span>How It Works</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATS BAR
+============================================================ -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item mg-reveal d1">
+      <div class="stat-value">5<span>min</span></div>
+      <div class="stat-label">Application Time</div>
+    </div>
+    <div class="stat-item mg-reveal d2">
+      <div class="stat-value">2<span>hr</span></div>
+      <div class="stat-label">Pre-Approval Decision</div>
+    </div>
+    <div class="stat-item mg-reveal d3">
+      <div class="stat-value">24<span>hr</span></div>
+      <div class="stat-label">Funds in Account</div>
+    </div>
+    <div class="stat-item mg-reveal d4">
+      <div class="stat-value">19<span>+</span></div>
+      <div class="stat-label">Lender Partners</div>
+    </div>
+    <div class="stat-item mg-reveal d5">
+      <div class="stat-value">50<span>k+</span></div>
+      <div class="stat-label">Happy Clients</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     OVERVIEW QUICK STEPS
+============================================================ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">The Process</span>
+      <h2 class="section-title">4 Simple Steps to Your Loan</h2>
+      <p class="section-subtitle">We've designed the most straightforward loan application experience in South Africa. No paperwork, no branch visits, no stress.</p>
+    </div>
+    <div class="quick-steps">
+      <div class="quick-step-card mg-reveal d1 mg-shimmer">
+        <div class="quick-step-num">01</div>
+        <div class="quick-step-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h4>Fill in Your Details</h4>
+        <p>Complete our secure 5-minute online form with your personal, employment, and financial information.</p>
+      </div>
+      <div class="quick-step-card mg-reveal d2 mg-shimmer">
+        <div class="quick-step-num">02</div>
+        <div class="quick-step-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h4>Get Instant Pre-Approval</h4>
+        <p>Our AI-powered system matches you with the best lenders and provides a pre-approval decision within 2 hours.</p>
+      </div>
+      <div class="quick-step-card mg-reveal d3 mg-shimmer">
+        <div class="quick-step-num">03</div>
+        <div class="quick-step-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h4>Upload Documents</h4>
+        <p>Simply upload your ID, payslips, and bank statements digitally. No faxing, no physical branches needed.</p>
+      </div>
+      <div class="quick-step-card mg-reveal d4 mg-shimmer">
+        <div class="quick-step-num">04</div>
+        <div class="quick-step-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h4>Receive Your Funds</h4>
+        <p>Once approved, funds are deposited directly into your bank account — often the same day or within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DETAILED STEPS — VISUAL
+============================================================ -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">Detailed Walkthrough</span>
+      <h2 class="section-title">Every Step, Explained</h2>
+      <p class="section-subtitle">Here's exactly what happens when you apply with Credo Finance — complete transparency, every step of the way.</p>
+    </div>
+
+    <div class="steps-container">
+      <!-- Step 1 -->
+      <div class="step-row">
+        <div class="step-content mg-reveal d1">
+          <div class="step-number-badge">1</div>
+          <h3>Apply Online in 5 Minutes</h3>
+          <p>Start your application on any device — phone, tablet, or desktop. Our form is designed for speed and simplicity. We ask only for what we need to match you with the right lender at the right rate.</p>
+          <ul class="step-features">
+            <li>100% secure, SSL-encrypted form</li>
+            <li>No branch visits ever required</li>
+            <li>Works on all devices &amp; browsers</li>
+            <li>POPIA compliant — your data is safe</li>
+          </ul>
+        </div>
+        <div class="step-connector">
+          <div class="connector-line"></div>
+        </div>
+        <div class="step-visual mg-reveal d2">
+          <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Online application on laptop" loading="lazy">
+          <div class="step-visual-overlay"></div>
+          <div class="step-visual-badge">
+            <div class="badge-dot"></div>
+            Secure 256-bit Encryption
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-row">
+        <div class="step-visual mg-reveal d1">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="AI lender matching" loading="lazy">
+          <div class="step-visual-overlay"></div>
+          <div class="step-visual-badge">
+            <div class="badge-dot"></div>
+            Matching 19+ Lenders
+          </div>
+        </div>
+        <div class="step-connector">
+          <div class="connector-line"></div>
+        </div>
+        <div class="step-content mg-reveal d2">
+          <div class="step-number-badge">2</div>
+          <h3>We Match You with 19+ Lenders</h3>
+          <p>Our proprietary comparison engine analyzes your profile against South Africa's top lenders simultaneously. You see multiple offers in real time — and you choose the best one. No obligation.</p>
+          <ul class="step-features">
+            <li>Compare rates from 19+ NCR-registered lenders</li>
+            <li>AI-powered credit-profile matching</li>
+            <li>Real-time offers — no waiting</li>
+            <li>No impact on your credit score to check</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-row">
+        <div class="step-content mg-reveal d1">
+          <div class="step-number-badge">3</div>
+          <h3>Upload Your Documents Digitally</h3>
+          <p>Once you've accepted an offer, we'll request supporting documents. Everything is handled securely online — snap a photo or upload a PDF. Our team reviews and verifies within hours.</p>
+          <ul class="step-features">
+            <li>South African ID or Smart Card</li>
+            <li>3 months recent payslips or bank statements</li>
+            <li>Proof of residence (utility bill or lease)</li>
+            <li>Instant automated document verification</li>
+          </ul>
+        </div>
+        <div class="step-connector">
+          <div class="connector-line"></div>
+        </div>
+        <div class="step-visual mg-reveal d2">
+          <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Digital document upload" loading="lazy">
+          <div class="step-visual-overlay"></div>
+          <div class="step-visual-badge">
+            <div class="badge-dot"></div>
+            Verified in Hours
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-row">
+        <div class="step-visual mg-reveal d1">
+          <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Money received in bank" loading="lazy">
+          <div class="step-visual-overlay"></div>
+          <div class="step-visual-badge">
+            <div class="badge-dot"></div>
+            Funds Deposited Today
+          </div>
+        </div>
+        <div class="step-connector">
+          <div class="connector-line"></div>
+        </div>
+        <div class="step-content mg-reveal d2">
+          <div class="step-number-badge">4</div>
+          <h3>Get Funded — Fast</h3>
+          <p>Once your loan is approved and agreements are signed electronically, funds are transferred directly to your bank account. Most clients receive money the same business day or within 24 hours.</p>
+          <ul class="step-features">
+            <li>Same-day or next-day disbursement</li>
+            <li>Direct transfer to any South African bank</li>
+            <li>Digital loan agreement — sign anywhere</li>
+            <li>Full repayment schedule provided upfront</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TIMELINE — AFTER APPROVAL
+============================================================ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">Timeline</span>
+      <h2 class="section-title">From Application to Funds</h2>
+      <p class="section-subtitle">Here's exactly how the timeline looks from the moment you start your application to money in your account.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item mg-reveal d1">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">Minute 0 — 5</div>
+        <h4>Complete Your Online Application</h4>
+        <p>Fill in the secure online form with your details. Takes approximately 5 minutes on any device.</p>
+      </div>
+      <div class="timeline-item mg-reveal d2">
+        <div class="timeline-dot" style="background: var(--secondary);"></div>
+        <div class="timeline-time">Within 30 Minutes</div>
+        <h4>Initial Assessment &amp; Lender Matching</h4>
+        <p>Our system immediately processes your application and begins matching you against 19+ lenders in real time.</p>
+      </div>
+      <div class="timeline-item mg-reveal d3">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">Within 2 Hours</div>
+        <h4>Pre-Approval Decision</h4>
+        <p>You receive a pre-approval notification via SMS and email. Review your personalized loan offers and select the best one.</p>
+      </div>
+      <div class="timeline-item mg-reveal d4">
+        <div class="timeline-dot" style="background: var(--accent);"></div>
+        <div class="timeline-time">Within 4 Hours</div>
+        <h4>Document Upload &amp; Verification</h4>
+        <p>Upload required documents digitally. Our team verifies everything within hours using automated and manual checks.</p>
+      </div>
+      <div class="timeline-item mg-reveal d5">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">Within 24 Hours</div>
+        <h4>Final Approval &amp; Agreement</h4>
+        <p>Once verified, you receive your final loan agreement to sign electronically. No printing, no scanning needed.</p>
+      </div>
+      <div class="timeline-item mg-reveal d6">
+        <div class="timeline-dot" style="background: var(--secondary);"></div>
+        <div class="timeline-time">Same Day / Next Business Day</div>
+        <h4>Funds Deposited to Your Account</h4>
+        <p>Money is transferred directly to your nominated bank account. You're notified immediately once sent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     REQUIREMENTS
+============================================================ -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">What You Need</span>
+      <h2 class="section-title">Basic Requirements to Apply</h2>
+      <p class="section-subtitle">We keep our requirements minimal. Most South Africans qualify — even those with less-than-perfect credit.</p>
+    </div>
+    <div class="requirements-grid">
+      <div class="req-card mg-reveal d1">
+        <div class="req-icon blue">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <div>
+          <h4>Valid South African ID</h4>
+          <p>A green barcoded ID book or Smart ID card is required. Foreign nationals must provide a valid passport and work permit.</p>
+        </div>
+      </div>
+      <div class="req-card mg-reveal d2">
+        <div class="req-icon green">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div>
+          <h4>Proof of Income</h4>
+          <p>Last 3 months' payslips or bank statements showing regular income. Self-employed applicants may provide financial statements.</p>
+        </div>
+      </div>
+      <div class="req-card mg-reveal d3">
+        <div class="req-icon orange">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div>
+          <h4>Proof of Residence</h4>
+          <p>A recent utility bill, bank statement, or lease agreement not older than 3 months showing your current address.</p>
+        </div>
+      </div>
+      <div class="req-card mg-reveal d4">
+        <div class="req-icon yellow">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <div>
+          <h4>Active Bank Account</h4>
+          <p>A valid South African bank account in your name where funds will be deposited and debit orders will be processed.</p>
+        </div>
+      </div>
+      <div class="req-card mg-reveal d5">
+        <div class="req-icon blue">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <h4>Age 18 or Older</h4>
+          <p>You must be at least 18 years old to apply for a loan with Credo Finance, in accordance with South African law.</p>
+        </div>
+      </div>
+      <div class="req-card mg-reveal d6">
+        <div class="req-icon green">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.36 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.26 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <h4>Valid Contact Details</h4>
+          <p>An active South African phone number and email address to receive updates, verification codes, and loan agreements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+============================================================ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Common Questions About the Process</h2>
+      <p class="section-subtitle">Everything you need to know about applying with Credo Finance</p>
+    </div>
+    <div class="faq-container">
+      <div class="faq-item mg-reveal d1">
+        <button class="faq-question">
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <h4>How long does the full application process take?</h4>
+          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p>The application itself takes about 5 minutes. Most applicants receive a pre-approval decision within 2 hours and final approval and funding within 24 hours. Our record is 4 hours from application to funds!</p></div>
+      </div>
+      <div class="faq-item mg-reveal d2">
+        <button class="faq-question">
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h4>Will applying affect my credit score?</h4>
+          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p>Our initial pre-qualification check is a soft inquiry and does not affect your credit score. A hard inquiry only occurs when you formally accept a loan offer and proceed with a lender.</p></div>
+      </div>
+      <div class="faq-item mg-reveal d3">
+        <button class="faq-question">
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <h4>Can I apply if I have bad credit?</h4>
+          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p>Yes! We work with lenders specializing in all credit profiles. While your interest rate may be higher with a lower credit score, we always strive to find options for everyone. Apply and see your personalized offers.</p></div>
+      </div>
+      <div class="faq-item mg-reveal d4">
+        <button class="faq-question">
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <h4>Are there any fees to apply?</h4>
+          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p>No, our service is completely free to use. We earn a referral fee from lenders when you successfully take a loan — not from you. There are no upfront charges, no hidden costs, and no subscription fees.</p></div>
+      </div>
+      <div class="faq-item mg-reveal d5">
+        <button class="faq-question">
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h4>Can I repay my loan early?</h4>
+          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p>Yes. Under the National Credit Act, you have the right to settle your loan early at any time. Some lenders may charge a small early settlement fee, but this will be disclosed in your loan agreement before signing.</p></div>
+      </div>
+      <div class="faq-item mg-reveal d6">
+        <button class="faq-question">
+          <div class="faq-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h4>Is my personal information secure?</h4>
+          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p>Absolutely. We use 256-bit SSL encryption for all data transfers, are fully POPIA compliant, and never sell your data. Your information is only shared with lenders you explicitly authorize.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA BANNER
+============================================================ -->
+<section class="cta-banner">
+  <div class="cta-inner">
+    <h2 class="mg-reveal d1">Ready to Apply in 5 Minutes?</h2>
+    <p class="mg-reveal d2">Join 50,000+ South Africans who got funded through Credo Finance. Fast, transparent, and NCR registered.</p>
+    <div class="cta-buttons mg-reveal d3">
+      <a href="index.html#apply" class="btn-white mg-pulse-ring">Apply Now — It's Free</a>
+      <a href="loan-types.html" class="btn-outline-white">View Loan Types</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand">
+          <div class="footer-logo-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.93V18h-2v-1.07C9.39 16.57 8 15.35 8 13.5c0-.28.22-.5.5-.5s.5.22.5.5c0 1.38 1.57 2 3 2s3-.62 3-2c0-2.23-5-2-5-5 0-1.62 1.39-2.57 3-2.93V5h2v1.07c1.39.36 2.5 1.35 2.5 2.93 0 .28-.22.5-.5.5s-.5-.22-.5-.5c0-1.38-1.57-2-3-2s-3 .62-3 2c0 2.22 5 1.97 5 5 0 1.85-1.39 2.43-3 2.93z"/></svg>
+          </div>
+          <span class="footer-brand-text">Credo Finance</span>
+        </div>
+        <p>Your trusted partner for personal, home, and business loans. NCR registered and committed to transparent, affordable financing for all South Africans.</p>
+        <span class="footer-ncr">NCR Reg: NCRCP11356</span>
+        <div class="footer-contact">
+          <strong>Contact Us:</strong><br>
+          WhatsApp: <a href="https://wa.me/27685299179">+27 68 529 9179</a><br>
+          Email: <a href="mailto:info.credofinance@aol.com">info.credofinance@aol.com</a>
+        </div>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+          <a href="https://wa.me/27685299179" class="social-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="loan-types.html">Loan Types</a></li>
+          <li><a href="index.html#calculator">Calculator</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Loan Products</h4>
+        <ul class="footer-links">
+          <li><a href="loan-types.html">Personal Loans</a></li>
+          <li><a href="loan-types.html">Home Loans</a></li>
+          <li><a href="loan-types.html">Business Loans</a></li>
+          <li><a href="loan-types.html">Debt Consolidation</a></li>
+          <li><a href="loan-types.html">Student Loans</a></li>
+          <li><a href="loan-types.html">Vehicle Finance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="#">POPIA Compliance</a></li>
+          <li><a href="#">NCR Registration</a></li>
+          <li><a href="#">Responsible Lending</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Credo Finance. All rights reserved. NCR Reg: NCRCP11356</span>
+      <span>Registered Credit Provider. Loans subject to credit approval. Terms apply.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll progress bar
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (scrollTop / docHeight * 100) + '%';
+  }, { passive: true });
+
+  // Header scroll
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  menuBtn.addEventListener('click', () => mobileNav.classList.toggle('active'));
+
+  // Scroll reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.mg-reveal').forEach(el => revealObserver.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-question').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Button ripple
+  document.querySelectorAll('.btn-white, .btn-outline-white').forEach(btn => {
+    btn.classList.add('mg-ripple');
+    btn.addEventListener('click', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'mg-ripple-wave';
+      ripple.style.left = (e.clientX - rect.left) + 'px';
+      ripple.style.top = (e.clientY - rect.top) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+</script>
+</body>
+</html>
