@@ -86,20 +86,17 @@
             overflow: hidden;
         }
 
-         .ornate-border {
-    position: absolute;
-    top: 25px; left: 25px; right: 25px; bottom: 25px;
-    /* We switch from border-image to background-image for better PDF support */
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L45 35L80 40L45 45L40 80L35 45L0 40L35 35L40 0Z' fill='%23c5a059'/%3E%3C/svg%3E");
-    background-size: 40px; /* Adjust size of the stars */
-    background-repeat: repeat;
-    padding: 20px; /* Creates the "border" thickness */
-    mask-image: linear-gradient(black, black), linear-gradient(black, black);
-    mask-clip: content-box, border-box;
-    mask-composite: exclude;
-    -webkit-mask-composite: destination-out;
-    pointer-events: none;
-}
+         /* --- ORNATE DESIGNER BORDER --- */
+        .ornate-border {
+            position: absolute;
+            top: 25px; left: 25px; right: 25px; bottom: 25px;
+            border: 20px solid transparent;
+            /* Using a SVG-style pattern for the border */
+            border-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L45 35L80 40L45 45L40 80L35 45L0 40L35 35L40 0Z' fill='%23c5a059'/%3E%3C/svg%3E") 30 stretch;
+            pointer-events: none;
+            filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.3));
+        }
+
         .inner-frame {
             position: absolute;
             top: 55px; left: 55px; right: 55px; bottom: 55px;
@@ -202,7 +199,7 @@
 }
 
 .signatory-block {
-    width: 50px; /* Changed from 900px to 300px to prevent stretching */
+    width: 300px; /* Changed from 900px to 300px to prevent stretching */
     text-align: center;
 }
 
