@@ -78,23 +78,30 @@
             width: 1123px; 
             height: 794px;
             background: #fdfdfb;
-            padding: 50px 90px;
+            padding: 65px 110px;
             box-shadow: 0 0 50px rgba(0,0,0,0.6);
             position: relative;
             overflow: hidden;
         }
 
-        /* --- Professional Legal Border --- */
-        .border-heavy {
+        /* --- DESIGNED ORNATE BORDER --- */
+        .border-master {
             position: absolute;
             top: 20px; left: 20px; right: 20px; bottom: 20px;
-            border: 3px solid #111;
+            border: 2px solid #111;
             pointer-events: none;
         }
 
-        .border-thin {
+        .border-accent {
             position: absolute;
             top: 28px; left: 28px; right: 28px; bottom: 28px;
+            border: 6px double #c5a059; /* Gold Accent Frame */
+            pointer-events: none;
+        }
+
+        .border-inner {
+            position: absolute;
+            top: 40px; left: 40px; right: 40px; bottom: 40px;
             border: 1px solid #111;
             pointer-events: none;
         }
@@ -130,33 +137,23 @@
             margin-top: 4px;
         }
 
-        .contact-strip {
-            margin-top: 10px;
-            font-size: 10px;
-            font-family: Arial, sans-serif;
-            color: #555;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-        }
-
         /* --- Title Section --- */
         .doc-title-block {
             text-align: center;
-            margin: 25px 0;
+            margin: 20px 0;
         }
 
         .doc-title {
             font-size: 24px;
             font-weight: bold;
-            color: #002366; /* Royal Blue */
+            color: #002366; /* Deep Navy Blue */
             text-decoration: underline;
             text-underline-offset: 6px;
             letter-spacing: 1px;
         }
 
         .doc-ref-line {
-            margin-top: 10px;
+            margin-top: 8px;
             font-size: 12px;
             font-family: Arial, sans-serif;
             font-weight: bold;
@@ -165,7 +162,7 @@
         /* --- Legal Body --- */
         .legal-content {
             font-size: 17px;
-            line-height: 1.65;
+            line-height: 1.6;
             text-align: center;
         }
 
@@ -175,29 +172,27 @@
         }
 
         .official-guarantee-box {
-            margin: 20px auto;
+            margin: 15px auto;
             width: 90%;
-            padding: 20px 30px;
+            padding: 18px 25px;
             border: 1.5px solid #111;
             background: #fff;
             font-style: italic;
             text-align: center;
             font-size: 18px;
             font-weight: bold;
-            line-height: 1.5;
         }
 
-        /* --- Execution Area --- */
+        /* --- Execution Area (Seal on Right) --- */
         .execution-area {
-            margin-top: 40px;
+            margin-top: 35px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            padding: 0 20px;
         }
 
         .signatory-block {
-            width: 300px;
+            width: 280px;
             text-align: center;
         }
 
@@ -218,33 +213,34 @@
         }
 
         .seal-block {
-            width: 150px;
+            width: 200px;
             text-align: right;
+            padding-right: 20px;
         }
 
         .official-seal {
-            width: 110px;
+            width: 115px;
             opacity: 0.95;
         }
 
         .fine-legal-print {
             position: absolute;
-            bottom: 40px;
-            left: 100px;
-            right: 100px;
+            bottom: 45px;
+            left: 110px;
+            right: 110px;
             text-align: center;
             font-size: 9px;
             color: #666;
             font-family: Arial, sans-serif;
             border-top: 1px solid #eee;
-            padding-top: 10px;
+            padding-top: 8px;
         }
 
         @media print {
             body { background: white; padding: 0; }
             .toolbar, #verificationModal { display: none !important; }
             .paper { box-shadow: none; border: none; width: 100%; height: auto; display: block !important; }
-            .border-heavy, .border-thin { display: block !important; }
+            .border-master, .border-accent, .border-inner { display: block !important; }
         }
     </style>
 </head>
@@ -263,7 +259,7 @@
     </div>
 
     <div class="toolbar" id="docToolbar">
-        <div style="color: #fff; font-size: 11px; font-family: Arial; letter-spacing: 1px;">CREDO LOANS OFFICIAL REPOSITORY | CL/G-2026</div>
+        <div style="color: #fff; font-size: 11px; font-family: Arial; letter-spacing: 1px;">OFFICIAL REPOSITORY | INSTRUMENT OF GUARANTEE</div>
         <div>
             <button class="toolbar-btn" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
             <button class="toolbar-btn" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> Download PDF</button>
@@ -271,18 +267,14 @@
     </div>
 
     <div class="paper" id="legalPaper">
-        <div class="border-heavy"></div>
-        <div class="border-thin"></div>
+        <div class="border-master"></div>
+        <div class="border-accent"></div>
+        <div class="border-inner"></div>
         
         <div class="identity-header">
             <img src="image/ChatGPT_Image_Jun_5__2025__12_04_34_AM-removebg-preview.png" class="company-logo">
             <div class="brand-name">CREDO LOANS (PTY) LTD</div>
             <div class="brand-meta">NCR REG NO: NCRCP10123 | REG NO: 2018/317490/07</div>
-            <div class="contact-strip">
-                <span>WhatsApp: +27 68 529 9179</span>
-                <span>Email: info.credoloan@aol.com</span>
-                <span>Polokwane North, 0750</span>
-            </div>
         </div>
 
         <div class="doc-title-block">
@@ -293,13 +285,12 @@
         <div class="legal-content">
             <p>
                 To the designated applicant, <span class="highlight-data" id="nameTarget">...</span>, this document 
-                constitutes a formal and binding undertaking issued by the underwriting department of 
-                <strong>Credo Loans (Pty) Ltd</strong>. 
+                constitutes a formal and binding undertaking issued by <strong>Credo Loans (Pty) Ltd</strong>. 
             </p>
-            <p style="margin-top: 12px;">
+            <p style="margin-top: 10px;">
                 We hereby verify that the approved capital amount of 
                 <span class="highlight-data" id="amountTarget">...</span> has been successfully cleared and 
-                secured for immediate disbursement. This allocation is final and reserved exclusively 
+                secured for disbursement. This allocation is final and reserved exclusively 
                 under your verified application profile.
             </p>
 
@@ -325,16 +316,15 @@
                 <div style="font-size: 10px; text-transform: uppercase; color: #555;">Chief Approval Officer</div>
             </div>
 
-            <div style="flex: 1;"></div>
-
             <div class="seal-block">
                 <img src="image/pexels-cottonbro-4067758__3_-removebg-preview.png" class="official-seal">
+                <div style="font-size: 9px; margin-top: 5px; font-family: Arial;">CORPORATE SEAL AFFIXED</div>
             </div>
         </div>
 
         <div class="fine-legal-print">
             This document is a formal legal instrument issued by Credo Loans (Pty) Ltd (Licensed Credit Provider). 
-            Unauthorized duplication or alteration is prohibited by law. National Credit Act compliant.
+            NCR Licensed Credit Provider. National Credit Act compliant.
         </div>
     </div>
 
@@ -374,7 +364,7 @@
                 document.getElementById('docToolbar').style.display = 'flex';
                 document.getElementById('legalPaper').style.display = 'block';
             } else {
-                error.innerText = "ACCESS DENIED: EMAIL NOT RECOGNIZED.";
+                error.innerText = "ACCESS DENIED: RECORD NOT FOUND.";
                 error.style.display = "block";
                 btn.innerText = "Decipher Instrument";
                 btn.disabled = false;
