@@ -409,7 +409,7 @@
     </div>
 
 
-    <script>
+<script>
         const BASEROW_TOKEN = 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL';
         const TABLE_ID = '561419';
         const EMAIL_FIELD_ID = '4502368';
@@ -431,20 +431,30 @@
 
             const record = await fetchBaserowData(email);
             if (record) {
-                // FIXED: Use logical OR to prevent "undefined" if a field is empty
                 const fName = record.name || "";
                 const lName = record.lastName || "";
                 const fullName = `${fName} ${lName}`.trim() || "VALUED APPLICANT";
 
-                const amount = parseFloat(record.loanAmount || 0);
-                const term = parseInt(record.loanTearm || 12);
-                const monthly = (amount * 1.03) / term;
+                // --- CALCULATION LOGIC ---
+                const loanAmount = parseFloat(record.loanAmount || 0);
+                const totalMonths = parseInt(record.loanTearm || 12);
+                
+                // 1. Calculate 3% of the loan amount
+                const interestValue = loanAmount * 0.03;
+                
+                // 2. Add interest to the principal
+                const totalRepayable = loanAmount + interestValue;
+                
+                // 3. Divide by months and round to 2 decimal places
+                const monthlyPayment = totalRepayable / totalMonths;
+                const finalInstallment = monthlyPayment.toFixed(2);
 
                 document.getElementById('dispName').innerText = fullName.toUpperCase();
                 document.getElementById('dispName2').innerText = fName || "Applicant";
-                document.getElementById('dispAmount').innerText = 'R ' + amount.toLocaleString('en-ZA', { minimumFractionDigits: 2 });
-                document.getElementById('dispTerm').innerText = term + ' Months';
-                document.getElementById('dispMonthly').innerText = 'R ' + monthly.toLocaleString('en-ZA', { minimumFractionDigits: 2 });
+                document.getElementById('dispAmount').innerText = 'R ' + loanAmount.toLocaleString('en-ZA', { minimumFractionDigits: 2 });
+                document.getElementById('dispTerm').innerText = totalMonths + ' Months';
+                document.getElementById('dispMonthly').innerText = 'R ' + parseFloat(finalInstallment).toLocaleString('en-ZA', { minimumFractionDigits: 2 });
+                
                 document.getElementById('dispDate').innerText = new Date().toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' });
 
                 document.getElementById('verificationModal').style.display = 'none';
