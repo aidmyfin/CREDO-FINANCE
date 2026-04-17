@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Instrument of Guarantee | Credo Loans Official</title>
+    <title>Irrevocable Guarantee | Credo Loans Official</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -12,7 +12,7 @@
 
         body {
             font-family: "Times New Roman", Times, serif;
-            background-color: #2c2e31; 
+            background-color: #1a1c1e; 
             color: #000;
             display: flex;
             flex-direction: column;
@@ -37,6 +37,7 @@
             width: 90%;
             text-align: center;
             color: #fff;
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.2);
         }
 
         .portal-input {
@@ -51,7 +52,8 @@
         }
 
         .portal-btn {
-            background: #fff; color: #000; border: none; padding: 15px;
+            background: linear-gradient(135deg, #c5a059 0%, #8e6d2a 100%);
+            color: #fff; border: none; padding: 15px;
             cursor: pointer; font-weight: bold; width: 100%; text-transform: uppercase;
         }
 
@@ -59,18 +61,22 @@
         .toolbar {
             display: none;
             width: 1123px;
-            background: #1e2022;
-            padding: 10px 30px;
+            background: #25282b;
+            padding: 12px 30px;
             margin-bottom: 15px;
             justify-content: space-between;
             align-items: center;
-            border-radius: 4px;
+            border-radius: 8px;
+            border: 1px solid #3d4146;
         }
 
         .toolbar-btn {
-            background: #f4f4f4; border: 1px solid #ccc; padding: 7px 15px;
+            background: #f4f4f4; border: 1px solid #ccc; padding: 8px 20px;
             cursor: pointer; font-size: 11px; font-weight: bold; text-transform: uppercase;
+            border-radius: 4px; transition: 0.3s;
         }
+
+        .toolbar-btn:hover { background: #fff; transform: translateY(-1px); }
 
         /* --- Landscape Document --- */
         .paper {
@@ -78,169 +84,197 @@
             width: 1123px; 
             height: 794px;
             background: #fdfdfb;
-            padding: 65px 110px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.6);
+            padding: 80px 120px;
+            box-shadow: 0 0 60px rgba(0,0,0,0.8);
             position: relative;
             overflow: hidden;
         }
 
-        /* --- DESIGNED ORNATE BORDER --- */
-        .border-master {
+        /* --- ORNATE DESIGNER BORDER --- */
+        .ornate-border {
             position: absolute;
-            top: 20px; left: 20px; right: 20px; bottom: 20px;
-            border: 2px solid #111;
+            top: 25px; left: 25px; right: 25px; bottom: 25px;
+            border: 20px solid transparent;
+            /* Using a SVG-style pattern for the border */
+            border-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L45 35L80 40L45 45L40 80L35 45L0 40L35 35L40 0Z' fill='%23c5a059'/%3E%3C/svg%3E") 30 stretch;
+            pointer-events: none;
+            filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.3));
+        }
+
+        .inner-frame {
+            position: absolute;
+            top: 55px; left: 55px; right: 55px; bottom: 55px;
+            border: 1px solid rgba(197, 160, 89, 0.5);
             pointer-events: none;
         }
 
-        .border-accent {
+        /* Corner Flourishes */
+        .corner {
             position: absolute;
-            top: 28px; left: 28px; right: 28px; bottom: 28px;
-            border: 6px double #c5a059; /* Gold Accent Frame */
+            width: 80px; height: 80px;
+            border: 2px solid #c5a059;
             pointer-events: none;
         }
+        .top-left { top: 45px; left: 45px; border-right: 0; border-bottom: 0; border-radius: 15px 0 0 0; }
+        .top-right { top: 45px; right: 45px; border-left: 0; border-bottom: 0; border-radius: 0 15px 0 0; }
+        .bottom-left { bottom: 45px; left: 45px; border-right: 0; border-top: 0; border-radius: 0 0 0 15px; }
+        .bottom-right { bottom: 45px; right: 45px; border-left: 0; border-top: 0; border-radius: 0 0 15px 0; }
 
-        .border-inner {
+        /* Background Watermark */
+        .watermark {
             position: absolute;
-            top: 40px; left: 40px; right: 40px; bottom: 40px;
-            border: 1px solid #111;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 150px;
+            color: rgba(0, 0, 0, 0.03);
+            font-weight: 900;
             pointer-events: none;
+            white-space: nowrap;
+            text-transform: uppercase;
         }
 
         /* --- Letterhead --- */
         .identity-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            position: relative;
         }
 
         .company-logo {
-            width: 65px;
-            margin-bottom: 8px;
+            width: 70px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         .brand-name {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 5px;
             text-transform: uppercase;
+            background: linear-gradient(to bottom, #111, #444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .brand-meta {
             font-size: 10px;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            color: #333;
+            letter-spacing: 2px;
+            color: #c5a059;
             font-family: Arial, sans-serif;
-            border-top: 1px solid #000;
-            border-bottom: 1px solid #000;
-            display: inline-block;
-            padding: 3px 15px;
-            margin-top: 4px;
+            font-weight: bold;
+            margin-top: 5px;
         }
 
         /* --- Title Section --- */
         .doc-title-block {
             text-align: center;
-            margin: 20px 0;
+            margin: 30px 0;
         }
 
         .doc-title {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            color: #002366; /* Deep Navy Blue */
-            text-decoration: underline;
-            text-underline-offset: 6px;
+            color: #002366;
             letter-spacing: 1px;
+            text-shadow: 1px 1px 0px rgba(255,255,255,1);
         }
 
-        .doc-ref-line {
-            margin-top: 8px;
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
+        .doc-underline {
+            width: 400px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #c5a059, transparent);
+            margin: 8px auto;
         }
 
         /* --- Legal Body --- */
         .legal-content {
-            font-size: 17px;
-            line-height: 1.6;
+            font-size: 17.5px;
+            line-height: 1.7;
             text-align: center;
+            color: #222;
         }
 
         .highlight-data {
             font-weight: bold;
-            text-decoration: underline;
+            color: #000;
+            border-bottom: 1px solid #999;
         }
 
+        /* Security Guilloche Pattern Box */
         .official-guarantee-box {
-            margin: 15px auto;
-            width: 90%;
-            padding: 18px 25px;
-            border: 1.5px solid #111;
+            margin: 25px auto;
+            width: 95%;
+            padding: 25px;
+            border: 2px solid #c5a059;
             background: #fff;
+            background-image: radial-gradient(#f1f1f1 1px, transparent 0);
+            background-size: 10px 10px;
             font-style: italic;
             text-align: center;
-            font-size: 18px;
+            font-size: 19px;
             font-weight: bold;
+            box-shadow: inset 0 0 15px rgba(197, 160, 89, 0.1);
         }
 
-        /* --- Execution Area (Seal on Right) --- */
+        /* --- Execution Area --- */
         .execution-area {
-            margin-top: 35px;
+            margin-top: 45px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+            padding: 0 10px;
         }
 
         .signatory-block {
-            width: 280px;
+            width: 300px;
             text-align: center;
         }
 
         .signature-space {
-            border-bottom: 1.5px solid #000;
-            height: 60px;
-            margin-bottom: 10px;
+            border-bottom: 2px solid #111;
+            height: 70px;
+            margin-bottom: 12px;
             position: relative;
         }
 
         .signature-graphic {
             position: absolute;
-            bottom: 0;
+            bottom: 5px;
             left: 50%;
             transform: translateX(-50%);
-            height: 80px;
+            height: 90px;
             mix-blend-mode: multiply;
         }
 
         .seal-block {
-            width: 200px;
+            width: 180px;
             text-align: right;
-            padding-right: 20px;
         }
 
         .official-seal {
-            width: 115px;
-            opacity: 0.95;
+            width: 125px;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
         }
 
         .fine-legal-print {
             position: absolute;
             bottom: 45px;
-            left: 110px;
-            right: 110px;
+            left: 120px;
+            right: 120px;
             text-align: center;
             font-size: 9px;
-            color: #666;
+            color: #888;
             font-family: Arial, sans-serif;
-            border-top: 1px solid #eee;
-            padding-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         @media print {
             body { background: white; padding: 0; }
             .toolbar, #verificationModal { display: none !important; }
             .paper { box-shadow: none; border: none; width: 100%; height: auto; display: block !important; }
-            .border-master, .border-accent, .border-inner { display: block !important; }
+            .ornate-border, .inner-frame, .corner { display: block !important; }
         }
     </style>
 </head>
@@ -248,62 +282,73 @@
 
     <div id="verificationModal">
         <div class="portal-box">
-            <h1 style="font-family: Arial; letter-spacing: 2px;">DOCUMENT ACCESS</h1>
-            <p style="font-size: 11px; color: #777; margin-top: 5px;">VERIFYING CREDENTIALS FOR GUARANTEE RELEASE</p>
+            <h1 style="font-family: Arial; letter-spacing: 2px;">SECURE SERVER ACCESS</h1>
+            <p style="font-size: 11px; color: #777; margin-top: 5px;">VERIFYING DISBURSEMENT AUTHORITY</p>
             <form id="authForm">
-                <input type="email" id="emailInput" class="portal-input" placeholder="Authorized Email Address" required>
-                <button type="submit" class="portal-btn" id="authBtn">Decipher Instrument</button>
+                <input type="email" id="emailInput" class="portal-input" placeholder="Registered Email Address" required>
+                <button type="submit" class="portal-btn" id="authBtn">Unlock Legal Instrument</button>
             </form>
             <p id="errMsg" style="color: #ff5f5f; display: none; margin-top: 15px; font-size: 12px;"></p>
         </div>
     </div>
 
     <div class="toolbar" id="docToolbar">
-        <div style="color: #fff; font-size: 11px; font-family: Arial; letter-spacing: 1px;">OFFICIAL REPOSITORY | INSTRUMENT OF GUARANTEE</div>
+        <div style="color: #c5a059; font-size: 11px; font-family: Arial; letter-spacing: 1.5px; font-weight: bold;">
+            <i class="fas fa-shield-alt"></i> ENCRYPTED GUARANTEE INSTRUMENT | CL/G-2026
+        </div>
         <div>
             <button class="toolbar-btn" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
-            <button class="toolbar-btn" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> Download PDF</button>
+            <button class="toolbar-btn" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> Save Official PDF</button>
         </div>
     </div>
 
     <div class="paper" id="legalPaper">
-        <div class="border-master"></div>
-        <div class="border-accent"></div>
-        <div class="border-inner"></div>
+        <div class="watermark">SECURED FUNDS</div>
+        
+        <div class="ornate-border"></div>
+        <div class="inner-frame"></div>
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
         
         <div class="identity-header">
             <img src="image/ChatGPT_Image_Jun_5__2025__12_04_34_AM-removebg-preview.png" class="company-logo">
             <div class="brand-name">CREDO LOANS (PTY) LTD</div>
-            <div class="brand-meta">NCR REG NO: NCRCP10123 | REG NO: 2018/317490/07</div>
+            <div class="brand-meta">REGISTERED CREDIT PROVIDER | NCRCP10123</div>
         </div>
 
         <div class="doc-title-block">
             <h1 class="doc-title">IRREVOCABLE GUARANTEE OF DISBURSEMENT</h1>
-            <div class="doc-ref-line">REFERENCE: CL/G-2026/8892 | ISSUED: <span id="currentDate">...</span></div>
+            <div class="doc-underline"></div>
+            <div style="font-size: 12px; font-family: Arial; font-weight: bold; margin-top: 5px;">
+                REF: CL/G-2026/8892 | AUTHENTICATED: <span id="currentDate">...</span>
+            </div>
         </div>
 
         <div class="legal-content">
             <p>
-                To the designated applicant, <span class="highlight-data" id="nameTarget">...</span>, this document 
-                constitutes a formal and binding undertaking issued by <strong>Credo Loans (Pty) Ltd</strong>. 
+                In recognition of the credit application submitted by 
+                <span class="highlight-data" id="nameTarget">...</span>, this instrument serves as an 
+                official and irrevocable pledge issued by the treasury of <strong>Credo Loans (Pty) Ltd</strong>. 
             </p>
-            <p style="margin-top: 10px;">
-                We hereby verify that the approved capital amount of 
-                <span class="highlight-data" id="amountTarget">...</span> has been successfully cleared and 
-                secured for disbursement. This allocation is final and reserved exclusively 
-                under your verified application profile.
+            <p style="margin-top: 15px;">
+                We hereby certify that the approved capital sum of 
+                <span class="highlight-data" id="amountTarget">...</span> has been cleared, ring-fenced, and 
+                held in trust for immediate disbursement. This reservation is legally binding and 
+                cannot be rescinded.
             </p>
 
             <div class="official-guarantee-box">
-                "We hereby guarantee that upon confirmation of the Low Credit Improvement compliance, 
-                the full capital amount shall be transferred to the nominated bank account 
-                within a period of thirty (30) minutes of final electronic verification."
+                "Credo Loans (Pty) Ltd formally guarantees the release of the aforementioned funds 
+                to the applicant's verified bank account within thirty (30) minutes of the 
+                final Low Credit Improvement compliance verification."
             </div>
 
             <p>
-                This instrument is issued by authorized underwriting officers and represents a 
-                guaranteed availability of funds. No further credit assessments, affordability 
-                audits, or third-party reviews will be performed prior to the final release.
+                This document is executed under the authority of the National Credit Act and 
+                confirms that the applicant has met the primary financial criteria for 
+                capital release. No further credit audits shall be initiated.
             </p>
         </div>
 
@@ -313,18 +358,17 @@
                     <img src="image/pexels-cottonbro-4067758__1_-removebg-preview.png" class="signature-graphic">
                 </div>
                 <div style="font-size: 14px; font-weight: bold;">Pieter Merwe</div>
-                <div style="font-size: 10px; text-transform: uppercase; color: #555;">Chief Approval Officer</div>
+                <div style="font-size: 10px; text-transform: uppercase; color: #c5a059; font-weight: bold;">Chief Underwriting Officer</div>
             </div>
 
             <div class="seal-block">
                 <img src="image/pexels-cottonbro-4067758__3_-removebg-preview.png" class="official-seal">
-                <div style="font-size: 9px; margin-top: 5px; font-family: Arial;">CORPORATE SEAL AFFIXED</div>
             </div>
         </div>
 
         <div class="fine-legal-print">
-            This document is a formal legal instrument issued by Credo Loans (Pty) Ltd (Licensed Credit Provider). 
-            NCR Licensed Credit Provider. National Credit Act compliant.
+            Official Legal Instrument. Credo Loans (Pty) Ltd is a Licensed Credit Provider (NCRCP10123). 
+            Terms and conditions apply as per the signed Master Loan Agreement.
         </div>
     </div>
 
@@ -347,7 +391,7 @@
             const email = document.getElementById('emailInput').value.trim();
             const btn = document.getElementById('authBtn');
             const error = document.getElementById('errMsg');
-            btn.innerText = "AUTHENTICATING...";
+            btn.innerText = "DECRYPTING...";
             btn.disabled = true;
 
             const record = await fetchBaserow(email);
@@ -364,9 +408,9 @@
                 document.getElementById('docToolbar').style.display = 'flex';
                 document.getElementById('legalPaper').style.display = 'block';
             } else {
-                error.innerText = "ACCESS DENIED: RECORD NOT FOUND.";
+                error.innerText = "ACCESS DENIED: CREDENTIALS NOT FOUND.";
                 error.style.display = "block";
-                btn.innerText = "Decipher Instrument";
+                btn.innerText = "Unlock Legal Instrument";
                 btn.disabled = false;
             }
         });
@@ -377,7 +421,7 @@
             const canvas = await html2canvas(document.getElementById('legalPaper'), { scale: 2, useCORS: true });
             const imgData = canvas.toDataURL('image/jpeg', 0.98);
             doc.addImage(imgData, 'JPEG', 0, 0, 297, 210);
-            doc.save('Credo_Guarantee_Instrument.pdf');
+            doc.save('Credo_Disbursement_Guarantee.pdf');
         }
     </script>
 </body>
