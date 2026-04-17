@@ -199,7 +199,7 @@
         }
 
         .signatory-block {
-            width: 320px;
+            width: 900px;
             text-align: center;
         }
 
@@ -220,7 +220,7 @@
         }
 
         .seal-block {
-            width: 200px;
+            width: 90px;
             text-align: center;
             margin-bottom: 5px; /* Added lift from bottom border */
         }
@@ -397,13 +397,27 @@
         });
 
         async function downloadPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('l', 'mm', 'a4');
-            const canvas = await html2canvas(document.getElementById('legalPaper'), { scale: 2, useCORS: true });
-            const imgData = canvas.toDataURL('image/jpeg', 0.98);
-            doc.addImage(imgData, 'JPEG', 0, 0, 297, 210);
-            doc.save('Credo_Guarantee_Instrument.pdf');
-        }
+    const { jsPDF } = window.jspdf;
+    const element = document.getElementById('legalPaper');
+    
+    // Create PDF in Landscape (l), Millimeters (mm), A4 size
+    const doc = new jsPDF('l', 'mm', 'a4');
+
+    // Use html2canvas with settings that better support SVGs and borders
+    const canvas = await html2canvas(element, {
+        scale: 3, // Higher scale for crispness
+        useCORS: true,
+        logging: false,
+        backgroundColor: "#fdfdfb", // Matches your .paper background
+        allowTaint: true
+    });
+
+    const imgData = canvas.toDataURL('image/png'); // PNG preserves transparency/sharpness better than JPEG
+    
+    // A4 Landscape dimensions are 297mm x 210mm
+    doc.addImage(imgData, 'PNG', 0, 0, 297, 210);
+    doc.save('Credo_Guarantee_Instrument.pdf');
+}
     </script>
 </body>
 </html>
