@@ -189,55 +189,56 @@
             font-weight: bold;
         }
 
-        /* --- Execution Area (Spaced & Clean) --- */
-        .execution-area {
-            margin-top: 50px; /* Increased top spacing */
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            padding: 0 40px;
-        }
+        /* --- Execution Area (Balanced & Scaled) --- */
+.execution-area {
+    margin-top: 40px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 60px; /* Increased side padding for better framing */
+}
 
-        .signatory-block {
-            width: 900px;
-            text-align: center;
-        }
+.signatory-block {
+    width: 300px; /* Changed from 900px to 300px to prevent stretching */
+    text-align: center;
+}
 
-        .signature-space {
-            border-bottom: 2px solid #111;
-            height: 75px;
-            margin-bottom: 15px;
-            position: relative;
-        }
+.signature-space {
+    border-bottom: 2px solid #111;
+    height: 60px; /* Slightly shorter for a cleaner look */
+    margin-bottom: 10px;
+    position: relative;
+}
 
-        .signature-graphic {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 90px;
-            mix-blend-mode: multiply;
-        }
+.signature-graphic {
+    position: absolute;
+    bottom: -5px; /* Sits slightly on the line */
+    left: 50%;
+    transform: translateX(-50%);
+    height: 80px; /* Controlled height */
+    width: auto;
+    mix-blend-mode: multiply;
+}
 
-        .seal-block {
-            width: 90px;
-            text-align: center;
-            margin-bottom: 5px; /* Added lift from bottom border */
-        }
+.seal-block {
+    width: 150px; /* Increased to give the seal breathing room */
+    text-align: center;
+}
 
-        .official-seal {
-            width: 120px;
-            filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.15));
-        }
+.official-seal {
+    width: 100px; /* Controlled width for the seal */
+    height: auto;
+    filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.15));
+}
 
-        .seal-caption {
-            font-size: 9px;
-            font-family: Arial;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #777;
-            margin-top: 8px;
-        }
+.seal-caption {
+    font-size: 9px;
+    font-family: Arial;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #777;
+    margin-top: 5px;
+}
 
         .fine-legal-print {
             position: absolute;
