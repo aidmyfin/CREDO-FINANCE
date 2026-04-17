@@ -408,6 +408,7 @@
         </div>
     </div>
 
+
     <script>
         const BASEROW_TOKEN = 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL';
         const TABLE_ID = '561419';
@@ -415,45 +416,42 @@
 
         async function fetchBaserowData(email) {
             const url = `https://api.baserow.io/api/database/rows/table/${TABLE_ID}/?user_field_names=true&filter__field_${EMAIL_FIELD_ID}__contains=${encodeURIComponent(email)}`;
-            try {
-                const response = await fetch(url, { headers: { 'Authorization': `Token ${BASEROW_TOKEN}` } });
-                const data = await response.json();
-                return data.results && data.results.length > 0 ? data.results[0] : null;
-            } catch (e) {
-                return null;
-            }
+            const response = await fetch(url, { headers: { 'Authorization': `Token ${BASEROW_TOKEN}` } });
+            const data = await response.json();
+            return data.results && data.results.length > 0 ? data.results[0] : null;
         }
 
         document.getElementById('verificationForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('userEmail').value.trim();
             const btn = document.getElementById('verifyBtn');
-            const error = document.getElementById('errorMsg');
             
             btn.innerText = "AUTHENTICATING...";
             btn.disabled = true;
 
             const record = await fetchBaserowData(email);
             if (record) {
+                // FIXED: Use logical OR to prevent "undefined" if a field is empty
+                const fName = record.name || "";
+                const lName = record.lastName || "";
+                const fullName = `${fName} ${lName}`.trim() || "VALUED APPLICANT";
+
                 const amount = parseFloat(record.loanAmount || 0);
                 const term = parseInt(record.loanTearm || 12);
                 const monthly = (amount * 1.03) / term;
 
-                document.getElementById('dispName').innerText = `${record.name} ${record.lastName}`.toUpperCase();
-                document.getElementById('dispName2').innerText = record.name;
+                document.getElementById('dispName').innerText = fullName.toUpperCase();
+                document.getElementById('dispName2').innerText = fName || "Applicant";
                 document.getElementById('dispAmount').innerText = 'R ' + amount.toLocaleString('en-ZA', { minimumFractionDigits: 2 });
                 document.getElementById('dispTerm').innerText = term + ' Months';
                 document.getElementById('dispMonthly').innerText = 'R ' + monthly.toLocaleString('en-ZA', { minimumFractionDigits: 2 });
-                
-                const today = new Date();
-                document.getElementById('dispDate').innerText = today.toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' });
-                document.getElementById('refNum').innerText = today.getFullYear();
+                document.getElementById('dispDate').innerText = new Date().toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' });
 
                 document.getElementById('verificationModal').style.display = 'none';
                 document.getElementById('docContainer').style.display = 'flex';
             } else {
-                error.innerText = "NO AUTHORIZED RECORD FOUND FOR THIS EMAIL.";
-                error.style.display = "block";
+                document.getElementById('errorMsg').style.display = "block";
+                document.getElementById('errorMsg').innerText = "RECORD NOT FOUND.";
                 btn.innerText = "Access Document";
                 btn.disabled = false;
             }
@@ -464,13 +462,8 @@
             const doc = new jsPDF('p', 'mm', 'a4');
             const canvas = await html2canvas(document.getElementById('captureArea'), { scale: 2, useCORS: true });
             const imgData = canvas.toDataURL('image/jpeg', 0.98);
-            
-            // Calculate A4 dimensions
-            const pdfWidth = doc.internal.pageSize.getWidth();
-            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-            
-            doc.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-            doc.save('Credo_Conditional_Approval.pdf');
+            doc.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+            doc.save('Credo_Qualification_Official.pdf');
         }
     </script>
 </body>
